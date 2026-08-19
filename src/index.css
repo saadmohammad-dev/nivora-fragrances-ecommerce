@@ -1,0 +1,269 @@
+/* =========================================================
+   NIVORA FRAGRANCES — DESIGN TOKENS
+   Palette: Ink (near-black, warm) / Bone (warm ivory) /
+   Brass (muted antique gold) / Wine (deep burgundy) /
+   Rose Ash (dusty rose, women's line) / Moss (sage, fresh line)
+   Type: Fraunces (display, used sparingly) + Manrope (body/UI)
+   ========================================================= */
+
+:root {
+  --ink: #141210;
+  --ink-soft: #201c18;
+  --ink-line: rgba(173, 138, 78, 0.22);
+
+  --bone: #f6efe4;
+  --bone-soft: #efe6d6;
+  --paper: #fffdf9;
+
+  --brass: #ad8a4e;
+  --brass-light: #d3b579;
+  --wine: #6e2434;
+  --wine-light: #8a3245;
+  --rose-ash: #ce9ca4;
+  --moss: #5f6b4a;
+
+  --text-on-ink: #f3ead9;
+  --text-on-ink-muted: #b9ac96;
+  --text-on-bone: #241f19;
+  --text-muted: #766e5f;
+
+  --font-display: "Fraunces", "Iowan Old Style", serif;
+  --font-body: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  --shadow-soft: 0 12px 30px -14px rgba(20, 18, 16, 0.35);
+  --shadow-strong: 0 20px 45px -12px rgba(20, 18, 16, 0.5);
+
+  --container-max: 1240px;
+}
+
+[data-theme="dark"] {
+  --bone: #17140f;
+  --bone-soft: #1f1a14;
+  --paper: #1c1712;
+  --text-on-bone: #f1e7d6;
+  --text-muted: #a99f8d;
+  --ink: #0c0a08;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--bone);
+  color: var(--text-on-bone);
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  line-height: 1.65;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+.container-nivora {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.section-title {
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  font-weight: 600;
+}
+
+.btn-nivora {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-brass {
+  background: var(--brass);
+  color: var(--ink);
+}
+.btn-brass:hover {
+  background: var(--wine);
+  color: var(--text-on-ink);
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--ink-line);
+  color: var(--text-on-bone);
+}
+.btn-outline:hover {
+  border-color: var(--brass);
+  color: var(--brass);
+}
+
+.btn-ink {
+  background: var(--ink);
+  color: var(--text-on-ink);
+}
+.btn-ink:hover {
+  background: var(--wine);
+}
+
+.btn-sm {
+  padding: 9px 16px;
+  font-size: 0.78rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-disabled,
+.btn-nivora:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.badge-discount {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--wine);
+  color: var(--text-on-ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  z-index: 2;
+}
+
+.badge-bestseller {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--bone);
+  color: var(--ink);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 9px;
+  border-radius: var(--radius-sm);
+  z-index: 2;
+  border: 1px solid var(--ink-line);
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.price-current {
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.price-original {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.stars {
+  color: var(--brass);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.divider-hairline {
+  height: 1px;
+  background: var(--ink-line);
+  border: none;
+  margin: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--text-on-ink);
+  padding: 10px 16px;
+  z-index: 999;
+}
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
