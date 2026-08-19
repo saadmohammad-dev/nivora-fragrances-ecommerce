@@ -13,40 +13,39 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// simple request logger
+// Request Logger
 app.use((req, res, next) => {
-  console.log(`${new Date().toLocaleTimeString()}  ${req.method}  ${req.originalUrl}`);
+  console.log(`${new Date().toLocaleTimeString()} ${req.method} ${req.originalUrl}`);
   next();
 });
 
-// Root & Health Check Routes (Handles both / and /api)
+// Root & Health Check
 app.get(["/", "/api"], (req, res) => {
   res.json({ message: "Nivora Fragrances API is running.", status: "ok" });
 });
 
-// API Routes — Mount BOTH with and without /api prefix for Vercel compatibility
+// Mount Routes (Handles /api/products as well as direct /products)
 app.use(["/api/products", "/products"], productsRouter);
 app.use(["/api/orders", "/orders"], ordersRouter);
 app.use(["/api/contact", "/contact"], contactRouter);
 app.use(["/api/subscribe", "/subscribe"], subscribeRouter);
 
-// 404 handler
+// 404 Handler
 app.use((req, res) => {
   res.status(404).json({ success: false, message: `Route ${req.originalUrl} does not exist.` });
 });
 
-// Central error handler
+// Central Error Handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ success: false, message: "Something went wrong on our end. Please try again." });
+  res.status(500).json({ success: false, message: "Something went wrong on our end." });
 });
 
-// Start local server (only runs during local development)
-if (process.env.NODE_ENV !== "production") {
+// Only listen locally, do not listen on Vercel
+if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`✨ Nivora Fragrances API listening on http://localhost:${PORT}`);
   });
 }
 
-// CRITICAL FOR VERCEL: Export the Express app instance
 module.exports = app;
