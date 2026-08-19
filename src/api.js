@@ -1,8 +1,7 @@
 import axios from "axios";
 
-// The backend Express server (see /backend). Change this if you deploy the
-// API somewhere other than your own machine.
-export const API_BASE_URL = "http://localhost:5000/api";
+// The backend Express server (see /backend).
+export const API_BASE_URL = "/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,

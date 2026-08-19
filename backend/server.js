@@ -19,10 +19,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
+// Root & Health Check Routes
+app.get(["/", "/api"], (req, res) => {
   res.json({ message: "Nivora Fragrances API is running.", status: "ok" });
 });
 
+// API Routes
 app.use("/api/products", productsRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/contact", contactRouter);
@@ -33,13 +35,18 @@ app.use((req, res) => {
   res.status(404).json({ success: false, message: `Route ${req.originalUrl} does not exist.` });
 });
 
-// central error handler — so the API always responds with clean JSON,
-// never a raw stack trace, no matter what input breaks a route
+// central error handler — so the API always responds with clean JSON
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ success: false, message: "Something went wrong on our end. Please try again." });
 });
 
-app.listen(PORT, () => {
-  console.log(`✨ Nivora Fragrances API listening on http://localhost:${PORT}`);
-});
+// Start local server (only runs during local development)
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`✨ Nivora Fragrances API listening on http://localhost:${PORT}`);
+  });
+}
+
+// CRITICAL FOR VERCEL: Export the Express app instance
+module.exports = app;
