@@ -1,70 +1,139 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Nivora Fragrances — Luxury E-Commerce Web Platform
 
-## Available Scripts
+Nivora Fragrances is a full-stack, responsive luxury e-commerce web platform built with React and Node.js/Express. Designed to offer a premium scent-shopping experience, the application features an interactive fragrance discovery quiz, localized order tracking, membership tier subscriptions, dynamic product filtering, and persistent state management via the React Context API.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 📌 Project Overview & Scope
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* **Objective:** Develop a modern, end-to-end e-commerce solution bridging intuitive frontend UI/UX design with lightweight RESTful API backend services.
+* **Scope:**
+  * **Interactive Discovery:** Guided scent quiz recommending tailored fragrances based on customer preferences.
+  * **Dynamic Catalog:** Real-time search, category filtering, and sorting across perfume families.
+  * **Order Management:** Live tracking portal powered by unique order IDs.
+  * **Subscription System:** Multi-tier membership plans with customizable benefits.
+  * **State & Persistence:** Seamless handling of shopping carts, light/dark themes, and toast notifications stored in `localStorage`.
+  * **REST API:** Express backend managing products, dynamic order creation, and subscription submissions via JSON persistence.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## ✨ Key Features Implemented
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* **Product Filtering & Sorting:** Filter products by target gender or scent family (Woody, Oriental, Fresh, Floral), search by keywords, and sort by price or customer rating.
+* **Interactive Scent Quiz:** A 5-step interactive quiz providing personalized perfume recommendations.
+* **Live Order Tracking:** Customer order status lookup using tracking identifiers (e.g., `NIV-PNTZ4W`).
+* **Cart & Wishlist Engine:** Add/remove items, toggle subscriptions for discounts, update quantities, and calculate totals dynamically.
+* **Membership Plans:** Browse and subscribe to membership tiers (Essence, Signature, Prestige) detailing exclusive perks.
+* **Global Theme & Notification System:** Dark/Light mode toggle paired with interactive toast alerts for user feedback.
+* **Assistant Widget & Support:** Floating virtual assistant modal for quick navigation and customer inquiries.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🛠 Tech Stack & Dependencies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### **Frontend**
+* **Framework:** React.js
+* **Routing:** React Router DOM
+* **State Management:** React Context API (`CartContext`, `ThemeContext`, `ToastContext`)
+* **Styling & Assets:** CSS3 Modules, Lucide React Icons
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### **Backend**
+* **Runtime:** Node.js
+* **Framework:** Express.js
+* **Data Storage:** JSON File Storage (`orders.json`, `subscribers.json`, `products.js`)
+* **Utilities:** `cors`, `uuid`, `fs`
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 📁 Repository Structure
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+web-project/
+├── backend/               # Express REST API Server
+│   ├── data/              # JSON databases (orders, subscribers, products)
+│   ├── routes/            # Route handlers (contact, orders, products, subscribe)
+│   ├── package.json       # Backend dependencies
+│   └── server.js          # API server entry point
+├── src/                   # React Frontend App
+│   ├── components/        # Reusable UI components & modals
+│   ├── context/           # React Context Providers (Cart, Theme, Toast)
+│   ├── pages/             # Page views (Home, Shop, ProductDetails, Quiz, etc.)
+│   ├── api.js             # API service integration
+│   ├── App.js             # Main application router
+│   └── index.js           # Frontend entry point
+├── public/                # Static assets & HTML template
+├── .gitignore             # Ignored files & folders
+└── package.json           # Frontend dependencies & scripts
 
-## Learn More
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🚀 Installation & Setup Guide
 
-### Code Splitting
+### **Prerequisites**
+Ensure **Node.js** (v14 or higher) and **npm** are installed on your machine.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### **1. Clone the Repository**
+```bash
+git clone [https://github.com/saadmohammad-dev/nivora-fragrances-ecommerce.git](https://github.com/saadmohammad-dev/nivora-fragrances-ecommerce.git)
+cd nivora-fragrances-ecommerce
 
-### Analyzing the Bundle Size
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### **2. Run Backend Server**
 
-### Making a Progressive Web App
+```bash
+# Navigate to backend folder
+cd backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+# Install dependencies
+npm install
 
-### Advanced Configuration
+# Start Express server
+node server.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
 
-### Deployment
+> The API server will run on `http://localhost:5000`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### **3. Run Frontend App**
 
-### `npm run build` fails to minify
+Open a second terminal tab or window in the root directory:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+# Install frontend dependencies
+npm install
+
+# Start React development server
+npm start
+
+```
+
+> The web app will launch on `http://localhost:3000`
+
+---
+
+## 🔌 REST API Endpoints
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `GET` | `/api/products` | Fetch all products (supports gender, family, search, and sort queries) |
+| `GET` | `/api/products/:id` | Fetch specific product by ID |
+| `POST` | `/api/orders` | Place a new customer order |
+| `GET` | `/api/orders/tracking/:id` | Retrieve live order tracking info |
+| `POST` | `/api/subscribe` | Process newsletter and membership registrations |
+| `POST` | `/api/contact` | Submit contact form message |
+
+---
+
+## 📜 License
+
+This project was developed for academic final semester web development evaluation.
+
+```
+
+```
