@@ -13,29 +13,29 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// simple request logger — helpful while demoing/marking the project
+// simple request logger
 app.use((req, res, next) => {
   console.log(`${new Date().toLocaleTimeString()}  ${req.method}  ${req.originalUrl}`);
   next();
 });
 
-// Root & Health Check Routes
+// Root & Health Check Routes (Handles both / and /api)
 app.get(["/", "/api"], (req, res) => {
   res.json({ message: "Nivora Fragrances API is running.", status: "ok" });
 });
 
-// API Routes
-app.use("/api/products", productsRouter);
-app.use("/api/orders", ordersRouter);
-app.use("/api/contact", contactRouter);
-app.use("/api/subscribe", subscribeRouter);
+// API Routes — Mount BOTH with and without /api prefix for Vercel compatibility
+app.use(["/api/products", "/products"], productsRouter);
+app.use(["/api/orders", "/orders"], ordersRouter);
+app.use(["/api/contact", "/contact"], contactRouter);
+app.use(["/api/subscribe", "/subscribe"], subscribeRouter);
 
-// 404 handler — always respond clearly to unknown routes
+// 404 handler
 app.use((req, res) => {
   res.status(404).json({ success: false, message: `Route ${req.originalUrl} does not exist.` });
 });
 
-// central error handler — so the API always responds with clean JSON
+// Central error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ success: false, message: "Something went wrong on our end. Please try again." });
