@@ -1,12 +1,11 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-const { v4: uuidv4 } = require("uuid");
+const { randomUUID } = require("crypto");
 
 const router = express.Router();
 const ORDERS_FILE = path.join(__dirname, "..", "data", "orders.json");
 
-// ---------- tiny JSON "database" helpers ----------
 function readOrders() {
   if (!fs.existsSync(ORDERS_FILE)) return [];
   try {
@@ -19,16 +18,14 @@ function readOrders() {
 }
 
 function writeOrders(orders) {
-  fs.writeFileSync(ORDERS_FILE, JSON.stringify(orders, null, 2));
+  try {
+    fs.writeFileSync(ORDERS_FILE, JSON.stringify(orders, null, 2));
+  } catch (err) {
+    console.error("Vercel filesystem write skipped:", err.message);
+  }
 }
 
-// ---------- simulated live tracking timeline ----------
-// NOTE FOR STUDENTS: in a real deployment these stages would be pushed by a
-// courier's webhook (TCS / Leopards / your own riders). For a course project
-// demo we advance the stages automatically based on elapsed time since the
-// order was placed, so a live tracker can be shown in class without waiting
-// for a real multi-day delivery. Tune STAGE_SPEED to change the demo pace.
-const STAGE_SPEED = 20; // seconds "per day" of simulated delivery
+const STAGE_SPEED = 20;
 const STAGES = [
   { key: "placed", label: "Order Placed", location: "Nivora Warehouse, Lahore", afterSeconds: 0 * STAGE_SPEED },
   { key: "processing", label: "Processing", location: "Nivora Fulfillment Center, Lahore", afterSeconds: 0.75 * STAGE_SPEED },
@@ -51,7 +48,6 @@ function computeStatus(order) {
   };
 }
 
-// ---------- validation ----------
 function validateOrder(body) {
   const required = ["name", "phone", "email", "address", "city", "zip"];
   const missing = required.filter((field) => !body[field] || !String(body[field]).trim());
@@ -72,7 +68,6 @@ function validateOrder(body) {
   return errors;
 }
 
-// POST /api/orders  — place a new order
 router.post("/", (req, res) => {
   const errors = validateOrder(req.body);
   if (errors.length) {
@@ -82,7 +77,7 @@ router.post("/", (req, res) => {
   const { name, phone, email, address, city, zip, items, total, subscription, notes } = req.body;
 
   const order = {
-    id: uuidv4(),
+    id: randomUUID(),
     trackingId: "NIV-" + Math.random().toString(36).slice(2, 8).toUpperCase(),
     name,
     phone,
@@ -109,7 +104,6 @@ router.post("/", (req, res) => {
   });
 });
 
-// GET /api/orders/:trackingId — live tracking status
 router.get("/:trackingId", (req, res) => {
   const orders = readOrders();
   const order = orders.find(

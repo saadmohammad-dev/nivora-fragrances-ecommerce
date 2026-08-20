@@ -1,7 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-const { v4: uuidv4 } = require("uuid");
+const { randomUUID } = require("crypto");
 
 const router = express.Router();
 const CONTACT_FILE = path.join(__dirname, "..", "data", "contacts.json");
@@ -17,10 +17,13 @@ function readContacts() {
 }
 
 function writeContacts(list) {
-  fs.writeFileSync(CONTACT_FILE, JSON.stringify(list, null, 2));
+  try {
+    fs.writeFileSync(CONTACT_FILE, JSON.stringify(list, null, 2));
+  } catch (err) {
+    console.error("Vercel filesystem write skipped:", err.message);
+  }
 }
 
-// POST /api/contact — general inquiry / contact-us form
 router.post("/", (req, res) => {
   const { name, email, subject, message } = req.body;
   const errors = [];
@@ -34,7 +37,7 @@ router.post("/", (req, res) => {
   }
 
   const entry = {
-    id: uuidv4(),
+    id: randomUUID(),
     name,
     email,
     subject: subject || "General Inquiry",

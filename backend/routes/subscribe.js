@@ -1,7 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-const { v4: uuidv4 } = require("uuid");
+const { randomUUID } = require("crypto");
 
 const router = express.Router();
 const SUB_FILE = path.join(__dirname, "..", "data", "subscribers.json");
@@ -17,7 +17,11 @@ function readSubs() {
 }
 
 function writeSubs(list) {
-  fs.writeFileSync(SUB_FILE, JSON.stringify(list, null, 2));
+  try {
+    fs.writeFileSync(SUB_FILE, JSON.stringify(list, null, 2));
+  } catch (err) {
+    console.error("Vercel filesystem write skipped:", err.message);
+  }
 }
 
 const PLAN_BENEFITS = {
@@ -37,7 +41,6 @@ const PLAN_BENEFITS = {
   }
 };
 
-// POST /api/subscribe — membership plan or newsletter signup
 router.post("/", (req, res) => {
   const { name, email, plan } = req.body;
   const errors = [];
@@ -50,7 +53,7 @@ router.post("/", (req, res) => {
   }
 
   const entry = {
-    id: uuidv4(),
+    id: randomUUID(),
     name: name || "",
     email,
     plan: plan || "newsletter",
